@@ -13,10 +13,13 @@ import android.view.MenuItem;
 import com.example.movies.API.Client;
 import com.example.movies.API.Service;
 import com.example.movies.Adapter.MoviesAdapter;
+import com.example.movies.model.Genre;
+import com.example.movies.model.GenreList;
 import com.example.movies.model.Movie;
 import com.example.movies.model.MoviesResponse;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -25,6 +28,7 @@ import retrofit2.Response;
 
 public class UpcomingActivity extends AppCompatActivity {
     BottomNavigationView bottm;
+    ArrayList<Genre> listeG;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +38,19 @@ public class UpcomingActivity extends AppCompatActivity {
         bottm.setOnNavigationItemReselectedListener(navlistener);
         Client client = new Client();
         Service apiService = client.getClient().create(Service.class);
+        Call<GenreList> call2 = apiService.listGenres(BuildConfig.THE_MOVIE_DB_API_TOKEN);
+        call2.enqueue(new Callback<GenreList>() {
+            @Override
+            public void onResponse(Call<GenreList> call, Response<GenreList> response) {
+                listeG=response.body().getGenres();
+            }
 
+            @Override
+            public void onFailure(Call<GenreList> call, Throwable t) {
+                System.out.println("Error " + t.getMessage());
+                listeG = new ArrayList<Genre>();
+            }
+        });
         Call<MoviesResponse> call = apiService.getUpcoming(BuildConfig.THE_MOVIE_DB_API_TOKEN);
         call.enqueue(new Callback<MoviesResponse>() {
             @Override
@@ -42,7 +58,7 @@ public class UpcomingActivity extends AppCompatActivity {
                 List<Movie> UpcomingMovies = response.body().getResults();
                 UpcomingMovies= response.body().getResults();
                 RecyclerView top_rated = (RecyclerView) findViewById(R.id.rupcoming);
-                MoviesAdapter adapter = new MoviesAdapter(UpcomingMovies);
+                MoviesAdapter adapter = new MoviesAdapter(UpcomingMovies,listeG);
                 top_rated.setAdapter(adapter);
                 // On déclare quelle type de LayoutManager on désire
                 top_rated.setLayoutManager(new LinearLayoutManager(getApplicationContext()));

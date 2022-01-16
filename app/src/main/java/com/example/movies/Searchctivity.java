@@ -29,7 +29,7 @@ public class Searchctivity extends AppCompatActivity {
         {
             if(list.size()!=0)
             {
-                MoviesAdapter adapter = new MoviesAdapter(list);
+                MoviesAdapter adapter = new MoviesAdapter(list,null);
                 rvmovies.setAdapter(adapter);
                 // On déclare quelle type de LayoutManager on désire
                 rvmovies.setLayoutManager(new LinearLayoutManager(getApplicationContext()));

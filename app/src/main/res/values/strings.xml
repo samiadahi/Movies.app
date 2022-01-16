@@ -1,6 +1,11 @@
 <resources>
-    <string name="app_name">Movies</string>
+    <string name="app_name">FILMS</string>
     <!-- TODO: Remove or change this placeholder text -->
-
+    <string name="add_to_favorite">Ajouter  au favoris</string>
+    <string name="anglais">Anglais</string>
+    <string name="français">Français</string>
+    <string name="popular">Populaire</string>
+    <string name="upcoming">A venir</string>
+    <string name="toprated">Les meilleures notes</string>
 
 </resources>

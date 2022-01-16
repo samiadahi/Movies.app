@@ -38,8 +38,7 @@
             android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Category"
-            android:id="@+id/categorie"/>
+            android:id="@+id/original_language"/>
 
 
         <TextView
@@ -58,9 +57,10 @@
             android:textColor="#fff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Studio"
             android:layout_marginTop="5dp"
-            android:id="@+id/studio"/>
+            android:id="@+id/genres"/>
+
+
 
 
 

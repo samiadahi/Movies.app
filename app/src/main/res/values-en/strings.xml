@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Movies</string>
+    <string name="add_to_favorite">Add to Favorite</string>
+    <string name="anglais">English</string>
+    <string name="français">Frensh</string>
+    <string name="popular">Popular</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="toprated">Toprated</string>
+</resources>

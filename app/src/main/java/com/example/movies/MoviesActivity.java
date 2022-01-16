@@ -40,6 +40,7 @@ public class MoviesActivity extends AppCompatActivity {
     //public ArrayList<Movie> movies =new ArrayList<>();
     public  List<Movie> movies;
     BottomNavigationView bottm;
+    ArrayList<Genre>listeG=new ArrayList<Genre>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +51,27 @@ public class MoviesActivity extends AppCompatActivity {
         bottm.setOnNavigationItemReselectedListener(navlistener);
         Client client = new Client();
         Service apiService = client.getClient().create(Service.class);
+        Call<GenreList> call2 = apiService.listGenres(BuildConfig.THE_MOVIE_DB_API_TOKEN);
+        call2.enqueue(new Callback<GenreList>() {
+            @Override
+            public void onResponse(Call<GenreList> call, Response<GenreList> response) {
+                listeG=response.body().getGenres();
 
+            }
+
+            @Override
+            public void onFailure(Call<GenreList> call, Throwable t) {
+                System.out.println("Error " + t.getMessage());
+                listeG = new ArrayList<Genre>();
+            }
+        });
         Call<MoviesResponse> call = apiService.getPopulardMovies(BuildConfig.THE_MOVIE_DB_API_TOKEN);
         call.enqueue(new Callback<MoviesResponse>() {
             @Override
             public void onResponse(Call<MoviesResponse> call, Response<MoviesResponse> response) {
                 movies = response.body().getResults();
                 RecyclerView rvmovies = (RecyclerView) findViewById(R.id.rvmovies);
-                MoviesAdapter adapter = new MoviesAdapter(movies);
+                MoviesAdapter adapter = new MoviesAdapter(movies,listeG);
                 rvmovies.setAdapter(adapter);
                 // On déclare quelle type de LayoutManager on désire
                 rvmovies.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -65,11 +79,13 @@ public class MoviesActivity extends AppCompatActivity {
             }
 
 
+
             @Override
             public void onFailure(Call<MoviesResponse> call, Throwable t) {
                 Log.d("erreur", t.getMessage());
             }
         });
+
 
 
     }

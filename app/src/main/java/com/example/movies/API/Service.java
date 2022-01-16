@@ -15,5 +15,7 @@ public interface Service {
 
     @GET("movie/upcoming")
     Call<MoviesResponse> getUpcoming(@Query("api_key") String apiKey);
+    @GET("genre/movie/list")
+    Call<GenreList> listGenres (@Query("api_key") String apiKey);
 }
 
